@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="./css/shinsegaefood.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
   <style>
   </style>
 </head>
@@ -592,6 +594,8 @@
   </div>
 
 <script>
+  AOS.init();
+
   const htmlEl = document.querySelector('html');
   const navEl = document.querySelector('.sitemap'); 
   const menuBtnEl = document.querySelector('.menu_btn');
@@ -601,6 +605,7 @@
   const esg = document.querySelector('.panels > .panel_item.esg');
   const recurit = document.querySelector('.panels > .panel_item.recurit');
   const topBtn = document.querySelector('.quick_menu > .btn_top');
+  const floatingPanel = document.querySelector('.floating_wrap >.floating_menu > .floating_panel');
 
   menuBtnEl.addEventListener('click', openSitemap);
   close_btnEl.addEventListener('click', closeSitemap)
@@ -662,12 +667,31 @@
     e.target.classList.remove('show');
   }
 
-  // todo: 위로 이동하고 버튼이 사라진다
-  // className을 줘서 위치 이동, 버튼 사라짐 
   function moveTotheTop(e) {
     window.scrollTo(0, 0);
-    e.target.classList.add('on');
-   
+    e.target.classList.add('data-aos', 'data-aos-offset', 'data-aos-duration');
+    topBtn.setAttribute("data-aos", "fade-top");
+    topBtn.setAttribute("'data-aos-offset'", "100");
+    topBtn.setAttribute("data-aos-duration", "1000");
+    // 다시 나타나게 하기
+    
+  }
+
+  window.addEventListener('scroll', scrollHandler);
+  function scrollHandler() {
+    let value = window.scrollY;
+    console.log(value);
+    if (value <= 2358) {
+      floatingPanel.classList.add('sticky');
+    } else {
+      floatingPanel.classList.remove('sticky');
+    }
+    
+    if (value <= 30 ) {
+      topBtn.classList.add('off');
+    } else {
+      topBtn.classList.remove('off');
+    }
   }
  
 </script>
